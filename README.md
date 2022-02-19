@@ -1,3 +1,3 @@
 ## AbracaMakeMeMoney por favor
 
-Node server for watching Abracadabra.money UST degenbox
+Node server for alerting on MIM amounts made available on Abracadabra.money UST degenbox

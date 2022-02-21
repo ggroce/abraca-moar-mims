@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Node server for alerting on MIM amounts made available on Abracadabra.money UST degenbox",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon -r dotenv/config index.js",
@@ -31,9 +30,10 @@
   },
   "homepage": "https://github.com/ggroce/abraca-make-me-money#readme",
   "dependencies": {
-    "axios": "^0.26.0",
     "ethers": "^5.5.4",
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "knex": "^1.0.3",
+    "pg": "^8.7.3"
   },
   "devDependencies": {
     "dotenv": "^16.0.0",

@@ -1,18 +1,18 @@
-require('dotenv').config();
-const express = require('express');
+require("dotenv").config();
+const express = require("express");
 
-const { CONTRACT_QUERY_INTERVAL } = require('./config/constants');
-const { askBentoBoxBalance } = require('./services/getMimAmount');
-const { sendTwilioSMS } = require('./services/notifications/twilio-notif');
+const config = require("./config");
+const { askBentoBoxBalance } = require("./services/getMimAmount");
+const { sendTwilioSMS } = require("./services/notifications/twilio-notif");
 
-const db = require('knex')({
-  client: 'pg',
+const db = require("knex")({
+  client: "pg",
   connection: {
-    connectionString: process.env.DATABASE_URL,
+    connectionString: config.db.connectionString,
   },
 });
 const app = express();
-const port = process.env.PORT || 38000;
+const port = config.app.port;
 let currentMimValue = null;
 
 app.use(express.json());
@@ -25,7 +25,7 @@ app.listen(port, () => {
 // setup initial mim value
 (async () => {
   currentMimValue = await askBentoBoxBalance();
-  console.log('Current mim value: ', currentMimValue);
+  console.log("Current mim value: ", currentMimValue);
 })();
 
 // begin interval to check for new mim value
@@ -37,9 +37,9 @@ setInterval(async () => {
   );
   if (mimBalance > currentMimValue) {
     currentMimValue = mimBalance;
-    console.log('MIM amound increased, sending SMS...');
+    console.log("MIM amound increased, sending SMS...");
     sendTwilioSMS(`Mim balance in cauldron has increased: ${mimBalance}`);
   } else {
-    console.log('Mim balance in cauldron unchanged.');
+    console.log("Mim balance in cauldron unchanged.");
   }
-}, CONTRACT_QUERY_INTERVAL);
+}, config.app.contractQueryInterval);

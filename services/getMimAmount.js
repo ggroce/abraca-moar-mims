@@ -1,31 +1,22 @@
 const ethers = require("ethers");
-const cauldronABI = require("./cauldronV2ABI.json");
-const bentoBoxABI = require("./bentoBoxABI.json");
 
-const {
-  ETH_MIM_ADDRESS,
-  ETH_CAULDRONV2_ADDRESS,
-  ETH_BENTOBOX_ADDRESS,
-} = require("../config/constants");
-
-const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY;
-const ALCHEMY_API_KEY = process.env.ALCHEMY_API_KEY;
+const config = require("../config");
 
 const provider = new ethers.getDefaultProvider("homestead", {
-  etherscan: ETHERSCAN_API_KEY,
-  alchemy: ALCHEMY_API_KEY,
+  etherscan: config.etherscan.apiKey,
+  alchemy: config.alchemy.apiKey,
 });
 
 const bentoBoxContract = new ethers.Contract(
-  ETH_BENTOBOX_ADDRESS,
-  bentoBoxABI,
+  config.contracts.ethBentoBox,
+  config.contractABIs.ethBentoBoxABI,
   provider
 );
 
 async function askBentoBoxBalance() {
   const mimBalanceHex = await bentoBoxContract.balanceOf(
-    ETH_MIM_ADDRESS,
-    ETH_CAULDRONV2_ADDRESS
+    config.contracts.ethMim,
+    config.contracts.ethCauldronV2
   );
 
   const mimBalance = ethers.utils.formatEther(mimBalanceHex.toString(), "wei");

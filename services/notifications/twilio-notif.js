@@ -1,19 +1,19 @@
-const twilioAccountSid = process.env.TWILIO_ACCOUNT_SID;
-const twilioAuthToken = process.env.TWILIO_AUTH_TOKEN;
-const twilioPhoneNumber = process.env.TWILIO_PHONE_NUMBER;
-const subscriberPhoneNumber = process.env.SUBSCRIBER_PHONE_NUMBER;
+const config = require("../../config");
 
-const client = require('twilio')(twilioAccountSid, twilioAuthToken);
+const client = require("twilio")(
+  config.twilio.accountSid,
+  config.twilio.authToken
+);
 
 function sendTwilioSMS(message) {
   client.messages
     .create({
       body: message,
-      from: twilioPhoneNumber,
-      to: subscriberPhoneNumber,
+      from: config.twilio.fromNumber,
+      to: config.twilio.subscriberNumber,
     })
     .then((message) => console.log(message.sid))
-    .catch((err) => console.log('Error with Twilio SMS', err));
+    .catch((err) => console.log("Error with Twilio SMS", err));
 }
 
 module.exports = {

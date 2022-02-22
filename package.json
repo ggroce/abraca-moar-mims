@@ -30,11 +30,13 @@
   },
   "homepage": "https://github.com/ggroce/abraca-make-me-money#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "ethers": "^5.5.4",
     "express": "^4.17.3",
     "knex": "^1.0.3",
     "pg": "^8.7.3",
-    "twilio": "^3.74.0"
+    "twilio": "^3.74.0",
+    "twit": "^2.2.11"
   },
   "devDependencies": {
     "dotenv": "^16.0.0",

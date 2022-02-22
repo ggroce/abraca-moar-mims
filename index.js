@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 
+const { CONTRACT_QUERY_INTERVAL } = require('./config/constants');
 const { askBentoBoxBalance } = require('./services/getMimAmount');
 const { sendTwilioSMS } = require('./services/notifications/twilio-notif');
 
@@ -27,6 +28,7 @@ app.listen(port, () => {
   console.log('Current mim value: ', currentMimValue);
 })();
 
+// begin interval to check for new mim value
 setInterval(async () => {
   let mimBalance = await askBentoBoxBalance();
   console.log(
@@ -34,8 +36,10 @@ setInterval(async () => {
     `-- Mim balance in cauldron: ${mimBalance}`
   );
   if (mimBalance > currentMimValue) {
+    currentMimValue = mimBalance;
+    console.log('MIM amound increased, sending SMS...');
     sendTwilioSMS(`Mim balance in cauldron has increased: ${mimBalance}`);
   } else {
-    console.log('Mim balance in cauldron has not increased');
+    console.log('Mim balance in cauldron unchanged.');
   }
-}, 20000);
+}, CONTRACT_QUERY_INTERVAL);

@@ -1,6 +1,6 @@
 ## MoarMims bot, aka AbracaMakeMeMoney, por favor
 
-Node server for alerting on MIM amounts made available on Abracadabra.money UST degenbox
+Node.js bot for alerting on MIM amounts made available on Abracadabra.money UST degenbox
 
 An Etherscan.io API key or an Alchemy API key, (both free), will need to be acquired for ethers.js to reach out to the block chain and interact with the contract(s). Infura is another option, with a simple tweak to the provider being required.
 

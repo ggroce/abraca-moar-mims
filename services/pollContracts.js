@@ -5,27 +5,29 @@ const {
 const { sendTwilioSMS } = require('../notifications/twilioNotif');
 const { sendTweet } = require('../notifications/twitterNotifs');
 
-let currentMimValue = null;
+let oldMimBalance = 0;
 // bentoBox must increase by at least this value for notifications to be sent
 let thresholdValue = 10;
 
 // setup initial mim value
 (async () => {
-  currentMimValue = await getBentoBoxBalance();
-  console.log('Current mim value: ', currentMimValue);
+  oldMimBalance = Number(await getBentoBoxBalance());
+  console.log('Current mim value: ', oldMimBalance);
 })();
 
 // begin interval to check for new mim value
 function watchContractForMoreMim() {
   setInterval(async () => {
-    let mimBalance = await getBentoBoxBalance();
+    let refreshedMimBalance = Number(await getBentoBoxBalance());
     console.log(
       new Date().toLocaleString(),
-      `-- Mim balance in cauldron: ${mimBalance}`
+      `-- Mim balance in cauldron: ${refreshedMimBalance}`
     );
-    if (mimBalance > currentMimValue) {
-      currentMimValue = mimBalance;
-      const notification = `Mim balance in cauldron has increased: ${mimBalance}`;
+    if (refreshedMimBalance > oldMimBalance) {
+      oldMimBalance = refreshedMimBalance;
+      const notification = `Mim balance in cauldron has increased: ${refreshedMimBalance.toFixed(
+        2
+      )}`;
       console.log(notification);
       sendTwilioSMS(notification);
       sendTweet(notification);

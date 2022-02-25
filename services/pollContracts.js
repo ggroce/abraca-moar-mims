@@ -11,28 +11,32 @@ let thresholdValue = 10;
 
 // setup initial mim value
 (async () => {
-  oldMimBalance = Number(await getBentoBoxBalance());
+  oldMimBalance = await getBentoBoxBalance();
   console.log('Current mim value: ', oldMimBalance);
 })();
 
 // begin interval to check for new mim value
 function watchContractForMoreMim() {
   setInterval(async () => {
-    let refreshedMimBalance = Number(await getBentoBoxBalance());
+    let refreshedMimBalance = await getBentoBoxBalance();
     console.log(
       new Date().toLocaleString(),
       `-- Mim balance in cauldron: ${refreshedMimBalance}`
     );
-    if (refreshedMimBalance > oldMimBalance) {
+
+    if (Math.trunc(refreshedMimBalance) > Math.trunc(oldMimBalance)) {
       oldMimBalance = refreshedMimBalance;
-      const notification = `Mim balance in cauldron has increased: ${refreshedMimBalance.toFixed(
+      const notification = `Mim balance available to the cauldron has increased: ${refreshedMimBalance.toFixed(
         2
-      )}`;
+      )}, get to cookin!`;
       console.log(notification);
-      sendTwilioSMS(notification);
+      // sendTwilioSMS(notification);
       sendTweet(notification);
+    } else if (Math.trunc(refreshedMimBalance) < Math.trunc(oldMimBalance)) {
+      console.log('Somebody got those MIMs!');
+      oldMimBalance = refreshedMimBalance;
     } else {
-      console.log('Mim balance in cauldron unchanged.');
+      console.log('Mim balance in cauldron unchanged. \r\n');
     }
   }, config.app.contractQueryInterval);
 }

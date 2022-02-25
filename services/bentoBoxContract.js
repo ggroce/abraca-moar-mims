@@ -23,7 +23,7 @@ async function getBentoBoxBalance() {
       mimBalanceHex.toString(),
       'wei'
     );
-    return mimBalance;
+    return Number(mimBalance);
   } catch (err) {
     console.log('Error getting mim balance: ', err);
   }

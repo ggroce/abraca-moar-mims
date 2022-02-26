@@ -19,11 +19,10 @@ async function getBentoBoxBalance() {
       config.contracts.ethMim,
       config.contracts.ethCauldronV2
     );
-    const mimBalance = ethers.utils.formatEther(
-      mimBalanceHex.toString(),
-      'wei'
+    const mimBalance = Number(
+      ethers.utils.formatEther(mimBalanceHex.toString(), 'wei')
     );
-    return Number(mimBalance);
+    return Number(mimBalance.toFixed(2));
   } catch (err) {
     console.log('Error getting mim balance: ', err);
   }

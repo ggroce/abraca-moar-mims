@@ -3,7 +3,7 @@
 
 
 
-## MoarMims bot, aka AbracaMakeMeMoney, por favor
+## MoarMims bot
 
 <p align="center">
   <img width="300px" height="300px" src="https://pbs.twimg.com/profile_images/1496617262253490176/uHxpN18R_400x400.jpg">

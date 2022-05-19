@@ -1,3 +1,8 @@
+## The use case for this project fades, as does hopefully our memories of the project(s) in question.  Deprecated.  Leaving for example code for interacting with Web3 requests / twitter bot only.  
+
+
+
+
 ## MoarMims bot, aka AbracaMakeMeMoney, por favor
 
 <p align="center">
